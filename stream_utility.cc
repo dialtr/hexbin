@@ -78,3 +78,11 @@ uint8_t HexCharToNybble(char ch) {
       return kInvalidHexChar;
   }
 }
+
+uint8_t TwosComplementChecksum(const std::vector<uint8_t>& data) {
+  uint8_t accum = 0;
+  for (auto b : data) {
+    accum += b;
+  }
+  return -accum;
+}

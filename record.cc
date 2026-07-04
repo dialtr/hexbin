@@ -1,15 +1,17 @@
 #include "record.h"
 
-#include <cstdint>
 #include <vector>
 
 #include "absl/status/status.h"
 #include "stream_utility.h"
 
-/*
-absl::Status ConsumeStartChar(std::istream& input);
-absl::StatusOr<uint8_t> ConsumeHexByte(std::istream& input);
-*/
+Record::Record(int byte_count, uint16_t address, uint8_t record_type,
+               std::vector<uint8_t> data, uint8_t checksum)
+    : byte_count_(byte_count),
+      address_(address),
+      record_type_(record_type),
+      data_(std::move(data)),
+      checksum_(checksum) {}
 
 absl::StatusOr<Record> Record::Read(std::istream& input) {
   // Read the start character, ':'.
@@ -25,7 +27,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   }
 
   // The next two bytes comprise the address offset of the data.
-  unsigned short address = 0;
+  uint16_t address = 0;
   for (int i = 0; i < 2; ++i) {
     absl::StatusOr<uint8_t> part = ConsumeHexByte(input);
     if (!part.ok()) {

@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <istream>
+#include <vector>
 
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
@@ -26,5 +27,9 @@ const uint8_t kInvalidHexChar = 0x80;
 // lower 4 bites of the uint8_t. If the character is not a valid
 // hex char, the function returns kInvalidHexChar.
 uint8_t HexCharToNybble(char ch);
+
+// Compute the two's complement checksum of the data. The procedure is
+// to add all of the bytes using a byte accumulator, then negate it.
+uint8_t TwosComplementChecksum(const std::vector<uint8_t>& data);
 
 #endif  // STREAM_UTILITY_H_
