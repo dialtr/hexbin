@@ -6,9 +6,9 @@
 #include <sstream>
 
 #include "absl/status/status.h"
-#include "hex_record.h"
-#include "range_overlap_detector.h"
-#include "stream_utility.h"
+#include "hexformat/hex_record.h"
+#include "hexformat/range_overlap_detector.h"
+#include "hexformat/stream_utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {
   EXPECT_EQ(HexCharToNybble('T'), kInvalidHexChar);

@@ -1,6 +1,6 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#ifndef RANGE_OVERLAP_DETECTOR_H_
-#define RANGE_OVERLAP_DETECTOR_H_
+#ifndef HEXFORMAT_RANGE_OVERLAP_DETECTOR_H_
+#define HEXFORMAT_RANGE_OVERLAP_DETECTOR_H_
 
 #include <algorithm>
 #include <cstddef>
@@ -36,4 +36,4 @@ class RangeOverlapDetector {
   std::vector<Range> ranges_;
 };
 
-#endif  // RANGE_OVERLAP_DETECTOR_H_
+#endif  // HEXFORMAT_RANGE_OVERLAP_DETECTOR_H_

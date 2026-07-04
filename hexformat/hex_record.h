@@ -1,6 +1,6 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#ifndef HEX_RECORD_H_
-#define HEX_RECORD_H_
+#ifndef HEXFORMAT_HEX_RECORD_H_
+#define HEXFORMAT_HEX_RECORD_H_
 
 #include <cstdint>
 #include <iostream>
@@ -53,4 +53,4 @@ class HexRecord {
   uint8_t calculated_checksum_ = 0;
 };
 
-#endif  // HEX_RECORD_H_
+#endif  // HEXFORMAT_HEX_RECORD_H_

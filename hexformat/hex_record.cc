@@ -1,13 +1,13 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#include "hex_record.h"
+#include "hexformat/hex_record.h"
 
 #include <iostream>
 #include <utility>
 #include <vector>
 
 #include "absl/status/status.h"
-#include "checksum.h"
-#include "stream_utility.h"
+#include "hexformat/checksum.h"
+#include "hexformat/stream_utility.h"
 
 using std::cerr;
 using std::cout;

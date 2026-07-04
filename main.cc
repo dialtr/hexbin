@@ -12,7 +12,7 @@
 #include "absl/flags/parse.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
-#include "hex_record.h"
+#include "hexformat/hex_record.h"
 
 using std::cerr;
 using std::cout;
