@@ -4,8 +4,8 @@
 #include <vector>
 
 #include "absl/status/status.h"
+#include "checksum.h"
 #include "stream_utility.h"
-#include "twos_complement_checksum.h"
 
 using std::cerr;
 using std::cout;
@@ -31,7 +31,7 @@ absl::StatusOr<HexRecord> HexRecord::Read(std::istream& input,
 
   // All bytes read are part of the calculated checksum, except for
   // the start character, which is always ':' and considered out of band.
-  TwosComplementChecksum calc_checksum;
+  Checksum calc_checksum;
 
   // The next component of a record is the byte count (rep'd as a byte).
   absl::StatusOr<uint8_t> byte_count = ConsumeHexByte(input);
