@@ -17,7 +17,7 @@ class Range {
 };
 
 // Custom comparison. Note: best practice would be to implement <=>
-// as of C++20. However, due to the fact ordering that we want for
+// as of C++20. However, due to the strict ordering that we want for
 // the algorithm, we implement this traditionally.
 bool operator<(const Range& lhs, const Range& rhs);
 
