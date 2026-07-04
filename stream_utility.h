@@ -10,14 +10,14 @@
 //   Returns absl::OkStatus() on success.
 //   Returns absl::ResourceExhaustedError() if EOF is reached before reading the
 //   char.
-absl::Status ConsumeStartChar(std::istream& input);
+absl::Status ConsumeStartByte(std::istream& input);
 
 // Consume two hexadecimal characters from the stream in succession that
 // code a single unsigned char (byte).
 //   Returns unsigned char on success.
 //   Returns absl::InvalidArgumentError if a non-hex char is read.
 //   Returns absl::ResourceExhaustedError if EOF is reached.
-absl::StatusOr<unsigned char> ConsumeHexChar(std::istream& input);
+absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input);
 
 const unsigned char kInvalidHexChar = 0x80;
 

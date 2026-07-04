@@ -26,44 +26,44 @@ TEST(HexCharToNybble, AllValidCharactersWork) {
   }
 }
 
-TEST(ConsumeStartChar, ConsumesCorrectly) {
+TEST(ConsumeStartByte, ConsumesCorrectly) {
   std::stringstream ss("    :abc");
-  absl::Status status = ConsumeStartChar(ss);
+  absl::Status status = ConsumeStartByte(ss);
   EXPECT_EQ(absl::OkStatus(), status);
   const int next = ss.get();
   EXPECT_EQ('a', next);
 }
 
-TEST(ConsumeStartChar, ReturnsResourceExhaustedWhenNoStartFound) {
+TEST(ConsumeStartByte, ReturnsResourceExhaustedWhenNoStartFound) {
   std::stringstream ss("abc");
-  absl::Status status = ConsumeStartChar(ss);
+  absl::Status status = ConsumeStartByte(ss);
   EXPECT_EQ(absl::StatusCode::kResourceExhausted, status.code());
 }
 
-TEST(ConsumeStartChar, ReturnsResourceExhaustedEmptyStream) {
+TEST(ConsumeStartByte, ReturnsResourceExhaustedEmptyStream) {
   std::stringstream ss("");
-  absl::Status status = ConsumeStartChar(ss);
+  absl::Status status = ConsumeStartByte(ss);
   EXPECT_EQ(absl::StatusCode::kResourceExhausted, status.code());
 }
 
-// absl::StatusOr<unsigned char> ConsumeHexChar(std::istream& input);
+// absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input);
 
-TEST(ConsumeHexChar, ConsumesCorrectly) {
+TEST(ConsumeHexByte, ConsumesCorrectly) {
   std::stringstream ss("ab");
-  auto status_or_val = ConsumeHexChar(ss);
+  auto status_or_val = ConsumeHexByte(ss);
   EXPECT_TRUE(status_or_val.ok());
   EXPECT_EQ(0xab, status_or_val.value());
 }
 
-TEST(ConsumeHexChar, ReturnsResourceExhaustedAtEof) {
+TEST(ConsumeHexByte, ReturnsResourceExhaustedAtEof) {
   std::stringstream ss("");
-  auto status_or_val = ConsumeHexChar(ss);
+  auto status_or_val = ConsumeHexByte(ss);
   EXPECT_EQ(absl::StatusCode::kResourceExhausted,
             status_or_val.status().code());
 }
 
-TEST(ConsumeHexChar, ReturnsInvalidArgumentOnBadChar) {
+TEST(ConsumeHexByte, ReturnsInvalidArgumentOnBadChar) {
   std::stringstream ss("ax");
-  auto status_or_val = ConsumeHexChar(ss);
+  auto status_or_val = ConsumeHexByte(ss);
   EXPECT_EQ(absl::StatusCode::kInvalidArgument, status_or_val.status().code());
 }

@@ -5,7 +5,7 @@
 
 #include "absl/status/status.h"
 
-absl::Status ConsumeStartChar(std::istream& input) {
+absl::Status ConsumeStartByte(std::istream& input) {
   for (;;) {
     int c = input.get();
     if (c == std::char_traits<char>::eof()) {
@@ -20,7 +20,7 @@ absl::Status ConsumeStartChar(std::istream& input) {
   return absl::OkStatus();
 }
 
-absl::StatusOr<unsigned char> ConsumeHexChar(std::istream& input) {
+absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input) {
   unsigned char byte = 0;
   for (int i = 0; i < 2; ++i) {
     const int c = input.get();
