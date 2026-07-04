@@ -7,7 +7,7 @@
 
 #include "absl/status/status.h"
 #include "hexformat/checksum.h"
-#include "hexformat/stream_utility.h"
+#include "hexformat/utility.h"
 
 using std::cerr;
 using std::cout;

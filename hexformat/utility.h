@@ -1,6 +1,6 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#ifndef HEXFORMAT_STREAM_UTILITY_H_
-#define HEXFORMAT_STREAM_UTILITY_H_
+#ifndef HEXFORMAT_UTILITY_H_
+#define HEXFORMAT_UTILITY_H_
 
 #include <cstdint>
 #include <istream>
@@ -29,4 +29,4 @@ const uint8_t kInvalidHexChar = 0x80;
 // hex char, the function returns kInvalidHexChar.
 uint8_t HexCharToNybble(char ch);
 
-#endif  // HEXFORMAT_STREAM_UTILITY_H_
+#endif  // HEXFORMAT_UTILITY_H_

@@ -8,7 +8,7 @@
 #include "absl/status/status.h"
 #include "hexformat/range_overlap_detector.h"
 #include "hexformat/record.h"
-#include "hexformat/stream_utility.h"
+#include "hexformat/utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {
   EXPECT_EQ(HexCharToNybble('T'), kInvalidHexChar);

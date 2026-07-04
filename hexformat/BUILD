@@ -26,17 +26,46 @@ cc_library(
 )
 
 cc_library(
+    visibility = [ "//visibility:public" ],
+    name = "record",
+    hdrs = [
+        "record.h",
+    ],
+    srcs = [
+        "record.cc",
+    ],
+    deps = [
+        "@abseil-cpp//absl/status:status",
+		    "@abseil-cpp//absl/status:statusor",
+				":checksum",
+				":utility",
+    ],
+)
+
+cc_library(
+    visibility = [ "//visibility:public" ],
+    name = "utility",
+    hdrs = [
+        "utility.h",
+    ],
+    srcs = [
+        "utility.cc",
+    ],
+    deps = [
+        "@abseil-cpp//absl/status:status",
+		    "@abseil-cpp//absl/status:statusor",
+    ],
+)
+
+
+cc_library(
 	  visibility = [ "//visibility:public" ],
 	  name = "hexformat",
 	  hdrs = [
 			  "binary.h",
-				"record.h",
-				"stream_utility.h",
 	  ],
 	  srcs = [
 			  "binary.cc",
-				"record.cc",
-				"stream_utility.cc",
 	  ],
 	  deps = [
 			  "@abseil-cpp//absl/status:status",
@@ -45,6 +74,8 @@ cc_library(
 		    "@abseil-cpp//absl/log:check",
 				":checksum",
 				":range_overlap_detector",
+				":record",
+				":utility",
 	  ],
 )
 
@@ -55,6 +86,7 @@ cc_test(
 				"@googletest//:gtest_main",
 			  ":checksum",
 		    ":hexformat",
+				":record",
 		],
 		timeout = "short",
 )
