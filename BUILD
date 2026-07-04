@@ -5,10 +5,12 @@ cc_library(
 	  hdrs = [
 				"record.h",
 				"stream_utility.h",
+				"twos_complement_checksum.h",
 	  ],
 	  srcs = [
 				"record.cc",
 				"stream_utility.cc",
+				"twos_complement_checksum.cc",
 	  ],
 	  deps = [
 			  "@abseil-cpp//absl/status:status",

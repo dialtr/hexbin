@@ -23,24 +23,27 @@ class Record {
   static absl::StatusOr<Record> Read(std::istream& input);
 
   // Validate the checksum.
-  bool ValidateChecksum() const;
+  bool IsValidChecksum() const;
+  bool IsEof() const { return record_type_ == kEndOfFile; }
 
   // Accessors
   int byte_count() const { return byte_count_; }
   uint16_t address() const { return address_; }
   uint8_t record_type() const { return record_type_; }
   const std::vector<uint8_t>& data() const { return data_; }
-  uint8_t checksum() const { return checksum_; }
+  uint8_t provided_checksum() const { return provided_checksum_; }
 
  private:
   Record(int byte_count, uint16_t address, uint8_t record_type,
-         std::vector<uint8_t> data, uint8_t checksum);
+         std::vector<uint8_t> data, uint8_t provided_checksum,
+         uint8_t calculated_checksum);
 
   int byte_count_ = 0;
   uint16_t address_ = 0;
   uint8_t record_type_ = kEndOfFile;
   std::vector<uint8_t> data_;
-  uint8_t checksum_ = 0;
+  uint8_t provided_checksum_ = 0;
+  uint8_t calculated_checksum_ = 0;
 };
 
 #endif  // RECORD_H_

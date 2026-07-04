@@ -1,17 +1,25 @@
 #include "record.h"
 
+#include <iostream>
 #include <vector>
 
 #include "absl/status/status.h"
 #include "stream_utility.h"
+#include "twos_complement_checksum.h"
+
+using std::cerr;
+using std::cout;
+using std::endl;
 
 Record::Record(int byte_count, uint16_t address, uint8_t record_type,
-               std::vector<uint8_t> data, uint8_t checksum)
+               std::vector<uint8_t> data, uint8_t provided_checksum,
+               uint8_t calculated_checksum)
     : byte_count_(byte_count),
       address_(address),
       record_type_(record_type),
       data_(std::move(data)),
-      checksum_(checksum) {}
+      provided_checksum_(provided_checksum),
+      calculated_checksum_(calculated_checksum) {}
 
 absl::StatusOr<Record> Record::Read(std::istream& input) {
   // Read the start character, ':'.
@@ -20,11 +28,16 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
     return status;
   }
 
+  // All bytes read are part of the calculated checksum, except for
+  // the start character, which is always ':' and considered out of band.
+  TwosComplementChecksum calc_checksum;
+
   // The next component of a record is the byte count (rep'd as a byte).
   absl::StatusOr<uint8_t> byte_count = ConsumeHexByte(input);
   if (!byte_count.ok()) {
     return byte_count.status();
   }
+  calc_checksum.AppendByte(byte_count.value());
 
   // The next two bytes comprise the address offset of the data.
   uint16_t address = 0;
@@ -33,6 +46,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
     if (!part.ok()) {
       return part.status();
     }
+    calc_checksum.AppendByte(part.value());
     address <<= 8;
     address |= part.value();
   }
@@ -42,6 +56,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   if (!record_type.ok()) {
     return record_type.status();
   }
+  calc_checksum.AppendByte(record_type.value());
 
   // What follows are 'count' bytes.
   std::vector<uint8_t> data;
@@ -51,19 +66,21 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
     if (!byte.ok()) {
       return byte.status();
     }
+    calc_checksum.AppendByte(byte.value());
     data.push_back(byte.value());
   }
 
   // Finally, a checksum is provided.
-  absl::StatusOr<uint8_t> checksum = ConsumeHexByte(input);
-  if (!checksum.ok()) {
-    return checksum.status();
+  absl::StatusOr<uint8_t> provided_checksum = ConsumeHexByte(input);
+  if (!provided_checksum.ok()) {
+    return provided_checksum.status();
   }
 
   return Record(byte_count.value(), address, record_type.value(),
-                std::move(data), checksum.value());
+                std::move(data), provided_checksum.value(),
+                calc_checksum.value());
 }
 
-bool Record::ValidateChecksum() const {
-  return (checksum_ == TwosComplementChecksum(data_));
+bool Record::IsValidChecksum() const {
+  return (provided_checksum_ == calculated_checksum_);
 }

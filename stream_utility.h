@@ -28,8 +28,4 @@ const uint8_t kInvalidHexChar = 0x80;
 // hex char, the function returns kInvalidHexChar.
 uint8_t HexCharToNybble(char ch);
 
-// Compute the two's complement checksum of the data. The procedure is
-// to add all of the bytes using a byte accumulator, then negate it.
-uint8_t TwosComplementChecksum(const std::vector<uint8_t>& data);
-
 #endif  // STREAM_UTILITY_H_
