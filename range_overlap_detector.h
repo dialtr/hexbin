@@ -1,3 +1,4 @@
+// Copyright (C) 2026 The hexbin authors. All rights reserved.
 #ifndef RANGE_OVERLAP_DETECTOR_H_
 #define RANGE_OVERLAP_DETECTOR_H_
 

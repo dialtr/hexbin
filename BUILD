@@ -3,12 +3,14 @@ load("@rules_cc//cc:defs.bzl", "cc_test", "cc_library", "cc_binary")
 cc_library(
 	  name = "hexbin_lib",
 	  hdrs = [
+			  "binary.h",
 			  "checksum.h",
 				"hex_record.h",
 				"range_overlap_detector.h",
 				"stream_utility.h",
 	  ],
 	  srcs = [
+			  "binary.cc",
 			  "checksum.cc",
 				"hex_record.cc",
 				"range_overlap_detector.cc",
