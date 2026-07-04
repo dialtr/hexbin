@@ -1,5 +1,5 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#include "hexformat/hex_record.h"
+#include "hexformat/record.h"
 
 #include <iostream>
 #include <utility>
@@ -13,7 +13,7 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-HexRecord::HexRecord(int byte_count, uint16_t address, uint8_t record_type,
+Record::Record(int byte_count, uint16_t address, uint8_t record_type,
                      std::vector<uint8_t> data, uint8_t provided_checksum,
                      uint8_t calculated_checksum)
     : byte_count_(byte_count),
@@ -23,7 +23,7 @@ HexRecord::HexRecord(int byte_count, uint16_t address, uint8_t record_type,
       provided_checksum_(provided_checksum),
       calculated_checksum_(calculated_checksum) {}
 
-absl::StatusOr<HexRecord> HexRecord::Read(std::istream& input,
+absl::StatusOr<Record> Record::Read(std::istream& input,
                                           const ReadOptions& read_options) {
   // Read the start character, ':'.
   absl::Status status = ConsumeStartByte(input);
@@ -88,11 +88,11 @@ absl::StatusOr<HexRecord> HexRecord::Read(std::istream& input,
     }
   }
 
-  return HexRecord(byte_count.value(), address, record_type.value(),
+  return Record(byte_count.value(), address, record_type.value(),
                    std::move(data), provided_checksum.value(),
                    calc_checksum.value());
 }
 
-bool HexRecord::IsValidChecksum() const {
+bool Record::IsValidChecksum() const {
   return (provided_checksum_ == calculated_checksum_);
 }

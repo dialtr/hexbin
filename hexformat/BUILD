@@ -6,14 +6,14 @@ cc_library(
 	  hdrs = [
 			  "binary.h",
 			  "checksum.h",
-				"hex_record.h",
+				"record.h",
 				"range_overlap_detector.h",
 				"stream_utility.h",
 	  ],
 	  srcs = [
 			  "binary.cc",
 			  "checksum.cc",
-				"hex_record.cc",
+				"record.cc",
 				"range_overlap_detector.cc",
 				"stream_utility.cc",
 	  ],
