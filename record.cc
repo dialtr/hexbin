@@ -60,5 +60,10 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
     return checksum.status();
   }
 
-  return absl::OkStatus();
+  return Record(byte_count.value(), address, record_type.value(),
+                std::move(data), checksum.value());
+}
+
+bool Record::ValidateChecksum() const {
+  return (checksum_ == TwosComplementChecksum(data_));
 }
