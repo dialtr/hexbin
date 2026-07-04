@@ -3,6 +3,11 @@
 #include <gtest/gtest.h>
 
 #include <iostream>
+#include <sstream>
+
+#include "absl/status/status.h"
+#include "record.h"
+#include "stream_utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {
   EXPECT_EQ(HexCharToNybble('T'), kInvalidHexChar);
@@ -21,4 +26,24 @@ TEST(HexCharToNybble, AllValidCharactersWork) {
   for (int i = 0; i < hexchars_len; ++i) {
     EXPECT_EQ(nybbles[i], HexCharToNybble(hexchars[i]));
   }
+}
+
+TEST(ConsumeStartChar, ConsumesCorrectly) {
+  std::stringstream ss("    :abc");
+  absl::Status status = ConsumeStartChar(ss);
+  EXPECT_EQ(absl::OkStatus(), status);
+  const int next = ss.get();
+  EXPECT_EQ('a', next);
+}
+
+TEST(ConsumeStartChar, ReturnsOutOfRangeWhenNoStartFound) {
+  std::stringstream ss("abc");
+  absl::Status status = ConsumeStartChar(ss);
+  EXPECT_EQ(absl::StatusCode::kOutOfRange, status.code());
+}
+
+TEST(ConsumeStartChar, ReturnsOutOfRangeOnEmptyStream) {
+  std::stringstream ss("");
+  absl::Status status = ConsumeStartChar(ss);
+  EXPECT_EQ(absl::StatusCode::kOutOfRange, status.code());
 }

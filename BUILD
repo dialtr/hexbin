@@ -3,12 +3,17 @@ load("@rules_cc//cc:defs.bzl", "cc_test", "cc_library", "cc_binary")
 cc_library(
 	  name = "hexbin_lib",
 	  hdrs = [
-        "hexbin.h"
+        "hexbin.h",
+				"record.h",
+				"stream_utility.h",
 	  ],
 	  srcs = [
-		    "hexbin.cc"
+		    "hexbin.cc",
+				"record.cc",
+				"stream_utility.cc",
 	  ],
 	  deps = [
+			  "@abseil-cpp//absl/status:status",
 		    "@abseil-cpp//absl/status:statusor",
 	      "@abseil-cpp//absl/strings",
 		    "@abseil-cpp//absl/log:check",
