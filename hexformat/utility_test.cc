@@ -1,4 +1,6 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
+#include "hexformat/utility.h"
+
 #include <gtest/gtest.h>
 
 #include <cstdint>
@@ -6,9 +8,6 @@
 #include <sstream>
 
 #include "absl/status/status.h"
-#include "hexformat/range_overlap_detector.h"
-#include "hexformat/record.h"
-#include "hexformat/utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {
   EXPECT_EQ(HexCharToNybble('T'), kInvalidHexChar);
@@ -48,8 +47,6 @@ TEST(ConsumeStartByte, ReturnsResourceExhaustedEmptyStream) {
   absl::Status status = ConsumeStartByte(ss);
   EXPECT_EQ(absl::StatusCode::kResourceExhausted, status.code());
 }
-
-// absl::StatusOr<uint8_t> ConsumeHexByte(std::istream& input);
 
 TEST(ConsumeHexByte, ConsumesCorrectly) {
   std::stringstream ss("ab");

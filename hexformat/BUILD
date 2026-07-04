@@ -15,7 +15,6 @@ cc_library(
 		],
 )
 
-
 cc_library(
     visibility = [ "//visibility:public" ],
     name = "checksum",
@@ -95,13 +94,13 @@ cc_library(
 )
 
 cc_test(
-	  name = "hexformat_test",
-		srcs = ["hexformat_test.cc"],
+	  name = "checksum_test",
+		srcs = ["checksum_test.cc"],
 		deps = [
+		    "@abseil-cpp//absl/log:check",
+        "@abseil-cpp//absl/status:status",
 				"@googletest//:gtest_main",
-			  ":checksum",
-		    ":hexformat",
-				":record",
+				":checksum",
 		],
 		timeout = "short",
 )
@@ -118,3 +117,26 @@ cc_test(
 		timeout = "short",
 )
 
+cc_test(
+	  name = "record_test",
+		srcs = ["record_test.cc"],
+		deps = [
+		    "@abseil-cpp//absl/log:check",
+        "@abseil-cpp//absl/status:status",
+				"@googletest//:gtest_main",
+				":record",
+		],
+		timeout = "short",
+)
+
+cc_test(
+	  name = "utility_test",
+		srcs = ["utility_test.cc"],
+		deps = [
+		    "@abseil-cpp//absl/log:check",
+        "@abseil-cpp//absl/status:status",
+				"@googletest//:gtest_main",
+				":utility",
+		],
+		timeout = "short",
+)
