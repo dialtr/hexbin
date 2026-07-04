@@ -25,6 +25,13 @@ class Record {
   // Validate the checksum.
   bool ValidateChecksum() const;
 
+  // Accessors
+  int byte_count() const { return byte_count_; }
+  uint16_t address() const { return address_; }
+  uint8_t record_type() const { return record_type_; }
+  const std::vector<uint8_t>& data() const { return data_; }
+  uint8_t checksum() const { return checksum_; }
+
  private:
   Record(int byte_count, uint16_t address, uint8_t record_type,
          std::vector<uint8_t> data, uint8_t checksum);
