@@ -1,0 +1,18 @@
+# MODULE.bazel
+module(
+    name = "skeleton",
+    version = "1.0.0",
+)
+
+# 0. Provide abseil
+bazel_dep(name = "abseil-cpp", version = "20260107.1")
+
+# 1. Provide the C++ rules Googletest needs to load
+bazel_dep(name = "rules_cc", version = "0.2.17")
+
+# 2. Provide the Python rules Googletest's internal scripts need
+bazel_dep(name = "rules_python", version = "1.9.0")
+
+# 3. Use Googletest
+bazel_dep(name = "googletest", version = "1.17.0.bcr.2")
+
