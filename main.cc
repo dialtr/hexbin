@@ -5,7 +5,6 @@
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
-#include "hexbin.h"
 
 using std::cout;
 using std::endl;

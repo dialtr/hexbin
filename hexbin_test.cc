@@ -1,5 +1,3 @@
-#include "hexbin.h"
-
 #include <gtest/gtest.h>
 
 #include <iostream>

@@ -3,12 +3,10 @@ load("@rules_cc//cc:defs.bzl", "cc_test", "cc_library", "cc_binary")
 cc_library(
 	  name = "hexbin_lib",
 	  hdrs = [
-        "hexbin.h",
 				"record.h",
 				"stream_utility.h",
 	  ],
 	  srcs = [
-		    "hexbin.cc",
 				"record.cc",
 				"stream_utility.cc",
 	  ],
