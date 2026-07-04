@@ -1,5 +1,6 @@
 #include "record.h"
 
+#include <cstdint>
 #include <vector>
 
 #include "absl/status/status.h"
@@ -7,7 +8,7 @@
 
 /*
 absl::Status ConsumeStartChar(std::istream& input);
-absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input);
+absl::StatusOr<uint8_t> ConsumeHexByte(std::istream& input);
 */
 
 absl::StatusOr<Record> Record::Read(std::istream& input) {
@@ -18,7 +19,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   }
 
   // The next component of a record is the byte count (rep'd as a byte).
-  absl::StatusOr<unsigned char> byte_count = ConsumeHexByte(input);
+  absl::StatusOr<uint8_t> byte_count = ConsumeHexByte(input);
   if (!byte_count.ok()) {
     return byte_count.status();
   }
@@ -26,7 +27,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   // The next two bytes comprise the address offset of the data.
   unsigned short address = 0;
   for (int i = 0; i < 2; ++i) {
-    absl::StatusOr<unsigned char> part = ConsumeHexByte(input);
+    absl::StatusOr<uint8_t> part = ConsumeHexByte(input);
     if (!part.ok()) {
       return part.status();
     }
@@ -35,16 +36,16 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   }
 
   // The next byte is the record type.
-  absl::StatusOr<unsigned char> record_type = ConsumeHexByte(input);
+  absl::StatusOr<uint8_t> record_type = ConsumeHexByte(input);
   if (!record_type.ok()) {
     return record_type.status();
   }
 
   // What follows are 'count' bytes.
-  std::vector<unsigned char> data;
+  std::vector<uint8_t> data;
   const int count = static_cast<int>(byte_count.value());
   for (int i = 0; i < count; ++i) {
-    absl::StatusOr<unsigned char> byte = ConsumeHexByte(input);
+    absl::StatusOr<uint8_t> byte = ConsumeHexByte(input);
     if (!byte.ok()) {
       return byte.status();
     }
@@ -52,7 +53,7 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   }
 
   // Finally, a checksum is provided.
-  absl::StatusOr<unsigned char> checksum = ConsumeHexByte(input);
+  absl::StatusOr<uint8_t> checksum = ConsumeHexByte(input);
   if (!checksum.ok()) {
     return checksum.status();
   }

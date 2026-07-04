@@ -1,6 +1,7 @@
 #include "stream_utility.h"
 
 #include <cctype>
+#include <cstdint>
 #include <istream>
 
 #include "absl/status/status.h"
@@ -20,15 +21,15 @@ absl::Status ConsumeStartByte(std::istream& input) {
   return absl::OkStatus();
 }
 
-absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input) {
-  unsigned char byte = 0;
+absl::StatusOr<uint8_t> ConsumeHexByte(std::istream& input) {
+  uint8_t byte = 0;
   for (int i = 0; i < 2; ++i) {
     const int c = input.get();
     if (c == std::char_traits<char>::eof()) {
       return absl::ResourceExhaustedError(
           "reached the end of the input stream before reading hex char");
     }
-    const unsigned char nybble = HexCharToNybble(static_cast<char>(c));
+    const uint8_t nybble = HexCharToNybble(static_cast<char>(c));
     if (nybble == kInvalidHexChar) {
       return absl::InvalidArgumentError(
           "read an invalid character (not a hex chat)");
@@ -39,7 +40,7 @@ absl::StatusOr<unsigned char> ConsumeHexByte(std::istream& input) {
   return byte;
 }
 
-unsigned char HexCharToNybble(char ch) {
+uint8_t HexCharToNybble(char ch) {
   switch (toupper(ch)) {
     case '0':
       return 0x0;
