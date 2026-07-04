@@ -1,5 +1,5 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#include "stream_utility.h"
+#include "hexformat/utility.h"
 
 #include <cctype>
 #include <cstdint>

@@ -1,3 +1,9 @@
 #!/bin/bash
 
-cpplint *.h *.cc
+if ls *.cc >/dev/null 2>&1; then
+  cpplint *.cc
+fi
+
+if ls *.h >/dev/null 2>&1; then
+	cpplint *.h
+fi

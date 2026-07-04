@@ -1,6 +1,6 @@
 // Copyright (C) 2026 The hexbin authors. All rights reserved.
-#ifndef CHECKSUM_H_
-#define CHECKSUM_H_
+#ifndef HEXFORMAT_CHECKSUM_H_
+#define HEXFORMAT_CHECKSUM_H_
 
 // Calculate the twos-complement checksum of a stream of bytes.
 
@@ -24,4 +24,4 @@ class Checksum {
   uint8_t sum_ = 0;
 };
 
-#endif  // CHECKSUM_H_
+#endif  // HEXFORMAT_CHECKSUM_H_
