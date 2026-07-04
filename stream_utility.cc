@@ -1,8 +1,10 @@
+// Copyright (C) 2026 The hexbin authors. All rights reserved.
 #include "stream_utility.h"
 
 #include <cctype>
 #include <cstdint>
 #include <istream>
+#include <string>
 
 #include "absl/status/status.h"
 

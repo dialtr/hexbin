@@ -1,3 +1,4 @@
+// Copyright (C) 2026 The hexbin authors. All rights reserved.
 #ifndef STREAM_UTILITY_H_
 #define STREAM_UTILITY_H_
 

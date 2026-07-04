@@ -1,3 +1,4 @@
+// Copyright (C) 2026 The hexbin authors. All rights reserved.
 #ifndef CHECKSUM_H_
 #define CHECKSUM_H_
 

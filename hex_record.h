@@ -1,3 +1,4 @@
+// Copyright (C) 2026 The hexbin authors. All rights reserved.
 #ifndef HEX_RECORD_H_
 #define HEX_RECORD_H_
 
@@ -52,4 +53,4 @@ class HexRecord {
   uint8_t calculated_checksum_ = 0;
 };
 
-#endif  // RECORD_H_
+#endif  // HEX_RECORD_H_
