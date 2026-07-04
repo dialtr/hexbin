@@ -26,7 +26,7 @@ class Record {
 
   // Read a single record from the stream.
   static absl::StatusOr<Record> Read(std::istream& input,
-                                        const ReadOptions& options);
+                                     const ReadOptions& options);
 
   // Validate the checksum.
   bool IsValidChecksum() const;
@@ -42,8 +42,8 @@ class Record {
 
  private:
   Record(int byte_count, uint16_t address, uint8_t record_type,
-            std::vector<uint8_t> data, uint8_t provided_checksum,
-            uint8_t calculated_checksum);
+         std::vector<uint8_t> data, uint8_t provided_checksum,
+         uint8_t calculated_checksum);
 
   int byte_count_ = 0;
   uint16_t address_ = 0;
