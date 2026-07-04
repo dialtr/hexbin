@@ -29,7 +29,7 @@ class Record {
                                      const ReadOptions& options);
 
   // Validate the checksum.
-  bool IsValidChecksum() const;
+  bool IsChecksumValid() const;
   bool IsEof() const { return record_type_ == kEndOfFile; }
 
   // Accessors

@@ -93,6 +93,6 @@ absl::StatusOr<Record> Record::Read(std::istream& input,
                 calc_checksum.value());
 }
 
-bool Record::IsValidChecksum() const {
+bool Record::IsChecksumValid() const {
   return (provided_checksum_ == calculated_checksum_);
 }
