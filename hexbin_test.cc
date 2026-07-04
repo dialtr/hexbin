@@ -34,14 +34,14 @@ TEST(ConsumeStartChar, ConsumesCorrectly) {
   EXPECT_EQ('a', next);
 }
 
-TEST(ConsumeStartChar, ReturnsOutOfRangeWhenNoStartFound) {
+TEST(ConsumeStartChar, ReturnsResourceExhaustedWhenNoStartFound) {
   std::stringstream ss("abc");
   absl::Status status = ConsumeStartChar(ss);
-  EXPECT_EQ(absl::StatusCode::kOutOfRange, status.code());
+  EXPECT_EQ(absl::StatusCode::kResourceExhausted, status.code());
 }
 
 TEST(ConsumeStartChar, ReturnsOutOfRangeOnEmptyStream) {
   std::stringstream ss("");
   absl::Status status = ConsumeStartChar(ss);
-  EXPECT_EQ(absl::StatusCode::kOutOfRange, status.code());
+  EXPECT_EQ(absl::StatusCode::kResourceExhausted, status.code());
 }

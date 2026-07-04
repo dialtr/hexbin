@@ -9,7 +9,8 @@ absl::Status ConsumeStartChar(std::istream& input) {
   for (;;) {
     int c = input.get();
     if (c == std::char_traits<char>::eof()) {
-      return absl::OutOfRangeError("reached the end of the input stream");
+      return absl::ResourceExhaustedError(
+          "reached the end of the input stream");
     }
     if (c == ':') {
       // This is the "Start char".
