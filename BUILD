@@ -18,7 +18,11 @@ cc_library(
 cc_binary(
 	  name = "hexbin",
 	  srcs = ["main.cc"],
-	  deps = [":hexbin_lib"],
+	  deps = [
+		    ":hexbin_lib",
+				"@abseil-cpp//absl/flags:flag",
+				"@abseil-cpp//absl/flags:parse",
+		],
 )
 
 cc_test(
@@ -28,5 +32,6 @@ cc_test(
 		    ":hexbin_lib",
 				"@googletest//:gtest_main",
 		],
+		timeout = "short",
 )
 
