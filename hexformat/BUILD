@@ -2,6 +2,22 @@ load("@rules_cc//cc:defs.bzl", "cc_test", "cc_library", "cc_binary")
 
 cc_library(
     visibility = [ "//visibility:public" ],
+    name = "binary",
+    hdrs = [
+        "binary.h",
+    ],
+    srcs = [
+        "binary.cc",
+    ],
+    deps = [
+        "@abseil-cpp//absl/status:status",
+        "@abseil-cpp//absl/status:statusor",
+		],
+)
+
+
+cc_library(
+    visibility = [ "//visibility:public" ],
     name = "checksum",
     hdrs = [
         "checksum.h",
@@ -62,16 +78,15 @@ cc_library(
 	  visibility = [ "//visibility:public" ],
 	  name = "hexformat",
 	  hdrs = [
-			  "binary.h",
 	  ],
 	  srcs = [
-			  "binary.cc",
 	  ],
 	  deps = [
 			  "@abseil-cpp//absl/status:status",
 		    "@abseil-cpp//absl/status:statusor",
 	      "@abseil-cpp//absl/strings",
 		    "@abseil-cpp//absl/log:check",
+				":binary",
 				":checksum",
 				":range_overlap_detector",
 				":record",
