@@ -7,6 +7,7 @@
 
 #include "absl/status/status.h"
 #include "hex_record.h"
+#include "range_overlap_detector.h"
 #include "stream_utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {
@@ -68,4 +69,56 @@ TEST(ConsumeHexByte, ReturnsInvalidArgumentOnBadChar) {
   std::stringstream ss("ax");
   auto status_or_val = ConsumeHexByte(ss);
   EXPECT_EQ(absl::StatusCode::kInvalidArgument, status_or_val.status().code());
+}
+
+TEST(RangeOverlapDetector, DegenerateRangeTest) {
+  RangeOverlapDetector d;
+  EXPECT_FALSE(d.HasOverlappingRanges());
+}
+
+TEST(RangeOverlapDetector, SingleRangeTest) {
+  RangeOverlapDetector d;
+  Range range;
+  range.start = 0;
+  range.length = 10;
+  d.AddRange(range);
+  EXPECT_FALSE(d.HasOverlappingRanges());
+}
+
+TEST(RangeOverlapDetector, TwoRangesNoOverlap) {
+  RangeOverlapDetector d;
+  Range a{.start{0}, .length{10}};
+  d.AddRange(a);
+  Range b{.start{10}, .length{10}};
+  d.AddRange(b);
+  EXPECT_FALSE(d.HasOverlappingRanges());
+}
+
+TEST(RangeOverlapDetector, TwoRangesOverlap) {
+  RangeOverlapDetector d;
+  Range a{.start{0}, .length{10}};
+  d.AddRange(a);
+  Range b{.start{9}, .length{10}};
+  d.AddRange(b);
+  EXPECT_TRUE(d.HasOverlappingRanges());
+}
+
+TEST(RangeOverlapDetector, OverlapWithin) {
+  RangeOverlapDetector d;
+  Range a{.start{0}, .length{10}};
+  d.AddRange(a);
+  Range b{.start{2}, .length{4}};
+  d.AddRange(b);
+  EXPECT_TRUE(d.HasOverlappingRanges());
+}
+
+TEST(RangeOverlapDetector, DisjointOverlap) {
+  RangeOverlapDetector d;
+  Range a{.start{0}, .length{100}};
+  d.AddRange(a);
+  Range b{.start{150}, .length{100}};
+  d.AddRange(b);
+  Range c{.start{110}, .length{50}};
+  d.AddRange(c);
+  EXPECT_TRUE(d.HasOverlappingRanges());
 }

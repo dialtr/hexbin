@@ -5,11 +5,13 @@ cc_library(
 	  hdrs = [
 			  "checksum.h",
 				"hex_record.h",
+				"range_overlap_detector.h",
 				"stream_utility.h",
 	  ],
 	  srcs = [
 			  "checksum.cc",
 				"hex_record.cc",
+				"range_overlap_detector.cc",
 				"stream_utility.cc",
 	  ],
 	  deps = [
