@@ -33,8 +33,9 @@ int main(int argc, char* argv[]) {
       cerr << "hexbin: failed to open file: '" << file_name << "'" << endl;
       exit(1);
     }
+    Record::ReadOptions read_options{.validate_checksum = true};
     while (!file.eof()) {
-      absl::StatusOr<Record> record = Record::Read(file);
+      absl::StatusOr<Record> record = Record::Read(file, read_options);
       if (!record.ok()) {
         cerr << "hexbin: error reading record: " << record.status() << endl;
         exit(1);
@@ -43,9 +44,7 @@ int main(int argc, char* argv[]) {
         break;
       }
       cout << "Read record, checksum: "
-           << static_cast<int>(record.value().provided_checksum())
-           << " validated: "
-           << (record.value().IsValidChecksum() ? "true" : "false") << endl;
+           << static_cast<int>(record.value().provided_checksum()) << endl;
     }
     file.close();
   }

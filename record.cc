@@ -21,7 +21,8 @@ Record::Record(int byte_count, uint16_t address, uint8_t record_type,
       provided_checksum_(provided_checksum),
       calculated_checksum_(calculated_checksum) {}
 
-absl::StatusOr<Record> Record::Read(std::istream& input) {
+absl::StatusOr<Record> Record::Read(std::istream& input,
+                                    const ReadOptions& read_options) {
   // Read the start character, ':'.
   absl::Status status = ConsumeStartByte(input);
   if (!status.ok()) {
@@ -74,6 +75,15 @@ absl::StatusOr<Record> Record::Read(std::istream& input) {
   absl::StatusOr<uint8_t> provided_checksum = ConsumeHexByte(input);
   if (!provided_checksum.ok()) {
     return provided_checksum.status();
+  }
+
+  // If the caller wanted to validate checksums, check the provided
+  // checksum against our calculated value. Any discrepancy is
+  // considered a data loss error.
+  if (read_options.validate_checksum) {
+    if (provided_checksum.value() != calc_checksum.value()) {
+      return absl::DataLossError("the checksum for the record was not valid");
+    }
   }
 
   return Record(byte_count.value(), address, record_type.value(),

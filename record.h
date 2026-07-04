@@ -18,9 +18,14 @@ class Record {
     kStartLinearAddress = 0x05
   };
 
-  // Read a record from the stream.
-  // Returns record, or error.
-  static absl::StatusOr<Record> Read(std::istream& input);
+  // Read options: default is to validate checksum.
+  struct ReadOptions {
+    bool validate_checksum = true;
+  };
+
+  // Read a single record from the stream.
+  static absl::StatusOr<Record> Read(std::istream& input,
+                                     const ReadOptions& options);
 
   // Validate the checksum.
   bool IsValidChecksum() const;
