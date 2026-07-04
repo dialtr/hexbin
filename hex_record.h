@@ -1,5 +1,5 @@
-#ifndef RECORD_H_
-#define RECORD_H_
+#ifndef HEX_RECORD_H_
+#define HEX_RECORD_H_
 
 #include <cstdint>
 #include <iostream>
@@ -7,7 +7,7 @@
 
 #include "absl/status/statusor.h"
 
-class Record {
+class HexRecord {
  public:
   enum RecordType {
     kDataRecord = 0x00,
@@ -24,8 +24,8 @@ class Record {
   };
 
   // Read a single record from the stream.
-  static absl::StatusOr<Record> Read(std::istream& input,
-                                     const ReadOptions& options);
+  static absl::StatusOr<HexRecord> Read(std::istream& input,
+                                        const ReadOptions& options);
 
   // Validate the checksum.
   bool IsValidChecksum() const;
@@ -37,11 +37,12 @@ class Record {
   uint8_t record_type() const { return record_type_; }
   const std::vector<uint8_t>& data() const { return data_; }
   uint8_t provided_checksum() const { return provided_checksum_; }
+  uint8_t calculated_checksum() const { return calculated_checksum_; }
 
  private:
-  Record(int byte_count, uint16_t address, uint8_t record_type,
-         std::vector<uint8_t> data, uint8_t provided_checksum,
-         uint8_t calculated_checksum);
+  HexRecord(int byte_count, uint16_t address, uint8_t record_type,
+            std::vector<uint8_t> data, uint8_t provided_checksum,
+            uint8_t calculated_checksum);
 
   int byte_count_ = 0;
   uint16_t address_ = 0;

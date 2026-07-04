@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "absl/status/status.h"
-#include "record.h"
+#include "hex_record.h"
 #include "stream_utility.h"
 
 TEST(HexCharToNybble, InvalidCharReturnsError) {

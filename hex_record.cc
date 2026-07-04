@@ -1,4 +1,4 @@
-#include "record.h"
+#include "hex_record.h"
 
 #include <iostream>
 #include <vector>
@@ -11,9 +11,9 @@ using std::cerr;
 using std::cout;
 using std::endl;
 
-Record::Record(int byte_count, uint16_t address, uint8_t record_type,
-               std::vector<uint8_t> data, uint8_t provided_checksum,
-               uint8_t calculated_checksum)
+HexRecord::HexRecord(int byte_count, uint16_t address, uint8_t record_type,
+                     std::vector<uint8_t> data, uint8_t provided_checksum,
+                     uint8_t calculated_checksum)
     : byte_count_(byte_count),
       address_(address),
       record_type_(record_type),
@@ -21,8 +21,8 @@ Record::Record(int byte_count, uint16_t address, uint8_t record_type,
       provided_checksum_(provided_checksum),
       calculated_checksum_(calculated_checksum) {}
 
-absl::StatusOr<Record> Record::Read(std::istream& input,
-                                    const ReadOptions& read_options) {
+absl::StatusOr<HexRecord> HexRecord::Read(std::istream& input,
+                                          const ReadOptions& read_options) {
   // Read the start character, ':'.
   absl::Status status = ConsumeStartByte(input);
   if (!status.ok()) {
@@ -86,11 +86,11 @@ absl::StatusOr<Record> Record::Read(std::istream& input,
     }
   }
 
-  return Record(byte_count.value(), address, record_type.value(),
-                std::move(data), provided_checksum.value(),
-                calc_checksum.value());
+  return HexRecord(byte_count.value(), address, record_type.value(),
+                   std::move(data), provided_checksum.value(),
+                   calc_checksum.value());
 }
 
-bool Record::IsValidChecksum() const {
+bool HexRecord::IsValidChecksum() const {
   return (provided_checksum_ == calculated_checksum_);
 }

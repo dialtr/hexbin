@@ -11,7 +11,7 @@
 #include "absl/flags/parse.h"
 #include "absl/status/status.h"
 #include "absl/status/statusor.h"
-#include "record.h"
+#include "hex_record.h"
 
 using std::cerr;
 using std::cout;
@@ -33,9 +33,9 @@ int main(int argc, char* argv[]) {
       cerr << "hexbin: failed to open file: '" << file_name << "'" << endl;
       exit(1);
     }
-    Record::ReadOptions read_options{.validate_checksum = true};
+    HexRecord::ReadOptions read_options{.validate_checksum = true};
     while (!file.eof()) {
-      absl::StatusOr<Record> record = Record::Read(file, read_options);
+      absl::StatusOr<HexRecord> record = HexRecord::Read(file, read_options);
       if (!record.ok()) {
         cerr << "hexbin: error reading record: " << record.status() << endl;
         exit(1);
