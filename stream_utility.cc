@@ -10,7 +10,7 @@ absl::Status ConsumeStartChar(std::istream& input) {
     int c = input.get();
     if (c == std::char_traits<char>::eof()) {
       return absl::ResourceExhaustedError(
-          "reached the end of the input stream");
+          "reached the end of the input stream before reading start char");
     }
     if (c == ':') {
       // This is the "Start char".
@@ -18,6 +18,25 @@ absl::Status ConsumeStartChar(std::istream& input) {
     }
   }
   return absl::OkStatus();
+}
+
+absl::StatusOr<unsigned char> ConsumeHexChar(std::istream& input) {
+  unsigned char byte = 0;
+  for (int i = 0; i < 2; ++i) {
+    const int c = input.get();
+    if (c == std::char_traits<char>::eof()) {
+      return absl::ResourceExhaustedError(
+          "reached the end of the input stream before reading hex char");
+    }
+    const unsigned char nybble = HexCharToNybble(static_cast<char>(c));
+    if (nybble == kInvalidHexChar) {
+      return absl::InvalidArgumentError(
+          "read an invalid character (not a hex chat)");
+    }
+    byte <<= 4;
+    byte |= nybble;
+  }
+  return byte;
 }
 
 unsigned char HexCharToNybble(char ch) {
