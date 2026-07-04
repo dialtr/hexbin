@@ -1,11 +1,8 @@
-#include "hexbin.h"
 #include <iostream>
+
+#include "hexbin.h"
 
 using std::cout;
 using std::endl;
 
-int main(int argc, char* argv[]) {
-	cout << "1 + 2 = " << Add(1, 2) << endl;
-	return 0;
-}
-
+int main(int argc, char* argv[]) { return 0; }
